@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
 
-	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-autoconfigure'
 	
 	implementation 'com.github.Rednoll:Kero-Security:master'
 	
