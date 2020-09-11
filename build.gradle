@@ -29,11 +29,10 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-autoconfigure'
 	
-	implementation 'com.github.Rednoll:Kero-Security:master'
+	implementation 'com.github.Rednoll:Kero-Security:master-SNAPSHOT'
+	implementation 'org.slf4j:slf4j-api:1.7.25'
 	
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
 test {
