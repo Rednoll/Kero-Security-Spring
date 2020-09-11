@@ -35,7 +35,7 @@ public class AccessAgentClassPathResourceConfigurator implements KeroAccessAgent
 	@Value("${kero.security.lang.resource.classpath.enabled:true}")
 	private boolean resourceClassPathEnabled;
 	
-	@Value("${kero.security.lang.file.suffixes:.k-s,.ks}")
+	@Value("${kero.security.lang.file.suffixes:**/*.k-s,**/*.ks}")
 	private String[] ksdlFileSuffixes;
 	
 	@Override
@@ -52,9 +52,9 @@ public class AccessAgentClassPathResourceConfigurator implements KeroAccessAgent
 			
 			try {
 				
-				LOGGER.debug("Begin scan classpath with pattern: classpath*:/*"+suffix);
-					
-				Resource[] resources = resolver.getResources("classpath*:/*"+suffix);
+				LOGGER.debug("Begin scan classpath with pattern: classpath*:"+suffix);
+				
+				Resource[] resources = resolver.getResources("classpath*:"+suffix);
 			
 				totalFilesFound += resources.length;
 				
