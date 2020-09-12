@@ -1,5 +1,6 @@
 package com.kero.security.spring.test;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.Test;
@@ -12,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.kero.security.core.agent.KeroAccessAgent;
 import com.kero.security.core.agent.configurator.KeroAccessAgentConfigruatorBeans;
 import com.kero.security.core.exception.AccessException;
+import com.kero.security.core.rules.AccessRule;
 import com.kero.security.spring.config.KeroAccessAgentConfiguration;
 import com.kero.security.spring.config.KeroAccessAgentFactoryConfiguration;
 
@@ -21,19 +23,30 @@ import com.kero.security.spring.config.KeroAccessAgentFactoryConfiguration;
 public class MainTest {
 	
 	@Autowired
-	private KeroAccessAgent manager;
+	private KeroAccessAgent agent;
 	
 	@Test
 	public void test() {
 		
-		TestObject obj = new TestObject("kek");
-	
-		TestObject ms = manager.protect(obj, "MS");
+		AccessRule defaultRule = agent.getOrCreateScheme(TestObjectImpl.class).getOrCreateLocalProperty("text").getDefaultRule();
+		
+		System.out.println("defaultRule: "+defaultRule);
+		
+		TestObjectImpl obj = new TestObjectImpl("kek");
+			obj.getChilds().add(new TestObjectImpl("lol"));
+		
+		TestObjectImpl ms = agent.protect(obj, "MS");
 		
 		assertThrows(AccessException.class, ms::getText);
 	
-		TestObject owner = manager.protect(obj, "OWNER");
+		TestObjectImpl owner = agent.protect(obj, "OWNER");
 		
-		owner.getText();
+		assertDoesNotThrow(owner::getText);
+		
+		assertThrows(AccessException.class, owner.getChilds().get(0)::getText);
+		
+		TestObjectImpl common = agent.protect(obj, "COMMON");
+		
+		assertThrows(AccessException.class, owner::getText);
 	}
 }

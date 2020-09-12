@@ -1,5 +1,6 @@
-scheme TestObject(G) {
+scheme TestObject(D) {
 
-	text(D): +OWNER +FRIEND
-		- propagation: OWNER -> FRIEND -> COMMON
+	text(D): -MS
+	childs(D): +OWNER
+		- propagation: OWNER -> MS
 }

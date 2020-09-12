@@ -31,10 +31,7 @@ public class AccessAgentClassPathResourceConfigurator implements KeroAccessAgent
 	
 	@Value("${kero.security.lang.provider.cache.enabled:true}")
 	private boolean providerCacheEnabled;
-	
-	@Value("${kero.security.lang.resource.classpath.enabled:true}")
-	private boolean resourceClassPathEnabled;
-	
+
 	@Value("${kero.security.lang.file.suffixes:**/*.k-s,**/*.ks}")
 	private String[] ksdlFileSuffixes;
 	
@@ -78,7 +75,7 @@ public class AccessAgentClassPathResourceConfigurator implements KeroAccessAgent
 			}
 		}
 	
-		LOGGER.info("Found KSDL files: "+totalFilesFound);
+		LOGGER.info("Found KSDL files in classpath: "+totalFilesFound);
 		
 		KsdlProvider provider = new CompositeProvider(sources);
 		
