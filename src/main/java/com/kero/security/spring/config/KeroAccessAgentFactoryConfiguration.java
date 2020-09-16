@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.kero.security.core.agent.KeroAccessAgentFactory;
+import com.kero.security.core.agent.KeroAccessAgentFactoryImpl;
 import com.kero.security.core.agent.configurator.AccessAgentClassPathResourceConfigurator;
-import com.kero.security.core.agent.factory.KeroAccessAgentFactory;
-import com.kero.security.core.agent.factory.KeroAccessAgentFactoryImpl;
 
 @Configuration
 public class KeroAccessAgentFactoryConfiguration {
