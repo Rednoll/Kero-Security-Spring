@@ -13,6 +13,7 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Component;
 
 import com.kero.security.core.agent.KeroAccessAgent;
+import com.kero.security.core.agent.KeroAccessAgentFactory;
 import com.kero.security.core.agent.configuration.KeroAccessAgentConfigurator;
 import com.kero.security.core.scheme.configurator.KsdlAccessSchemeConfigurator;
 import com.kero.security.lang.provider.CompositeProvider;
@@ -20,11 +21,12 @@ import com.kero.security.lang.provider.KsdlProvider;
 import com.kero.security.lang.provider.TextualProvider;
 import com.kero.security.lang.provider.resource.FileResource;
 import com.kero.security.lang.provider.resource.KsdlTextResource;
+import com.kero.security.spring.config.KeroAccessAgentFactorySpringConfiguration;
 
 @Component
-public class AccessAgentClassPathResourceConfigurator implements KeroAccessAgentConfigurator {
+public class AccessAgentClassPathResourceConfigurator implements KeroAccessAgentConfigurator, KeroAccessAgentFactorySpringConfiguration {
 
-	private static Logger LOGGER = LoggerFactory.getLogger(AccessAgentClassPathResourceConfigurator.class);
+	private static Logger LOGGER = LoggerFactory.getLogger("Kero-Security-Spring");
 	
 	@Value("${kero.security.lang.resource.cache.enabled:true}")
 	private boolean resourceCacheEnabled;
@@ -34,6 +36,17 @@ public class AccessAgentClassPathResourceConfigurator implements KeroAccessAgent
 
 	@Value("${kero.security.lang.file.suffixes:**/*.k-s,**/*.ks}")
 	private String[] ksdlFileSuffixes;
+
+	@Value("${kero.security.lang.resource.classpath.enabled:true}")
+	private boolean resourceClassPathEnabled;
+	
+	@Override
+	public void configure(KeroAccessAgentFactory factory) {
+		
+		if(!this.resourceClassPathEnabled) return;
+		
+		factory.addConfigurator(this);
+	}
 	
 	@Override
 	public void configure(KeroAccessAgent agent) {

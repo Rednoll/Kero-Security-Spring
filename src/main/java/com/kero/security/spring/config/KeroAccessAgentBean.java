@@ -8,7 +8,7 @@ import com.kero.security.core.agent.KeroAccessAgent;
 import com.kero.security.core.agent.KeroAccessAgentFactory;
 
 @Configuration
-public class KeroAccessAgentConfiguration {
+public class KeroAccessAgentBean {
 
 	@Autowired
 	private KeroAccessAgentFactory factory;
