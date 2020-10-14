@@ -70,7 +70,7 @@ public class AccessAgentClassPathResourceConfigurator implements KeroAccessAgent
 				
 				for(Resource resource : resources) {
 			
-					KsdlTextResource ksdlResource = new FileResource(resource.getFile());
+					KsdlTextResource ksdlResource = new FileResource(resource.getFile().toPath());
 					
 					if(resourceCacheEnabled) {
 						
@@ -80,7 +80,6 @@ public class AccessAgentClassPathResourceConfigurator implements KeroAccessAgent
 					
 					sources.add(new TextualProvider(ksdlResource));
 				}
-				
 			}
 			catch (IOException e) {
 
