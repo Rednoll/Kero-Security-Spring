@@ -16,7 +16,7 @@ import com.kero.security.core.agent.KeroAccessAgent;
 import com.kero.security.core.agent.KeroAccessAgentFactory;
 import com.kero.security.core.agent.configuration.KeroAccessAgentConfigurator;
 import com.kero.security.core.scheme.configurator.KsdlAccessSchemeConfigurator;
-import com.kero.security.lang.provider.CompositeProvider;
+import com.kero.security.lang.provider.BaseCompositeProvider;
 import com.kero.security.lang.provider.KsdlProvider;
 import com.kero.security.lang.provider.TextualProvider;
 import com.kero.security.lang.provider.resource.FileResource;
@@ -89,13 +89,13 @@ public class AccessAgentClassPathResourceConfigurator implements KeroAccessAgent
 	
 		LOGGER.info("Found KSDL files in classpath: "+totalFilesFound);
 		
-		KsdlProvider provider = new CompositeProvider(sources);
+		KsdlProvider provider = new BaseCompositeProvider(sources);
 		
 		if(providerCacheEnabled) {
 			
 			provider = KsdlProvider.addCacheWrap(provider);
 		}
 		
-		agent.addConfigurator(new KsdlAccessSchemeConfigurator(provider));
+		agent.addKsdlProvider(provider);
 	}
 }
