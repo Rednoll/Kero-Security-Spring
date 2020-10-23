@@ -66,9 +66,26 @@ group = 'com.github.rednoll'
 version = determineVersion()
 description = '	Kero-Security-Spring - integration Kero-Security with Spring Boot.'
 
+
 repositories {
 
 	mavenCentral()
+	
+	maven {
+
+		url "https://oss.sonatype.org/content/repositories/snapshots"
+	}
+}
+
+dependencies {
+
+	implementation 'org.springframework.boot:spring-boot:[2.0,)'
+	
+	implementation 'org.slf4j:slf4j-api:1.7.25'
+	
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+	implementation 'com.github.rednoll:kero-security:0.2.0-SNAPSHOT'
 }
 
 bootJar {
@@ -81,16 +98,6 @@ jar {
 	enabled = true
 }
 
-dependencies {
-
-	implementation 'org.springframework.boot:spring-boot:[2.0,)'
-	
-	implementation 'org.slf4j:slf4j-api:1.7.25'
-	
-	testImplementation('org.springframework.boot:spring-boot-starter-test')
-
-	implementation 'com.github.rednoll:kero-security:[0.1.38,)'
-}
 
 java {
 

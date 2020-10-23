@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 import com.kero.security.core.agent.KeroAccessAgent;
 import com.kero.security.core.agent.KeroAccessAgentFactory;
 import com.kero.security.core.agent.configuration.KeroAccessAgentConfigurator;
-import com.kero.security.core.scheme.configurator.KsdlAccessSchemeConfigurator;
 import com.kero.security.lang.provider.BaseCompositeProvider;
 import com.kero.security.lang.provider.KsdlProvider;
 import com.kero.security.lang.provider.TextualProvider;
