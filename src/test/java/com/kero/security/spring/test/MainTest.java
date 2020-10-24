@@ -9,16 +9,22 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.kero.security.core.agent.KeroAccessAgent;
 import com.kero.security.core.agent.configurator.KeroAccessAgentConfiguratorBeans;
+import com.kero.security.ksdl.agent.KsdlAgent;
 import com.kero.security.spring.config.KeroAccessAgentBean;
 import com.kero.security.spring.config.KeroAccessAgentFactoryBean;
+import com.kero.security.spring.config.KsdlAgentBean;
+import com.kero.security.spring.config.KsdlAgentFactoryBean;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {KeroAccessAgentBean.class, KeroAccessAgentFactoryBean.class, KeroAccessAgentConfiguratorBeans.class})
+@SpringBootTest(classes = {KeroAccessAgentBean.class, KeroAccessAgentFactoryBean.class, KsdlAgentBean.class, KsdlAgentFactoryBean.class, KeroAccessAgentConfiguratorBeans.class})
 @ActiveProfiles("test")
 public class MainTest {
 	
 	@Autowired
-	private KeroAccessAgent agent;
+	private KeroAccessAgent accessAgent;
+	
+	@Autowired
+	private KsdlAgent ksdlAgent;
 	
 	@Test
 	public void test() {

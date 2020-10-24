@@ -1,5 +1,6 @@
 package com.kero.security.spring.config;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,8 @@ import com.kero.security.core.agent.KeroAccessAgentFactoryImpl;
 @Configuration
 public class KeroAccessAgentFactoryBean {
 	
-	@Autowired
-	private List<KeroAccessAgentFactorySpringConfiguration> springConfigurators;
+	@Autowired(required = false)
+	private List<KeroAccessAgentFactorySpringConfiguration> springConfigurators = new ArrayList<>();
 	
 	@Bean
 	public KeroAccessAgentFactory keroAccessAgentFactory() {
