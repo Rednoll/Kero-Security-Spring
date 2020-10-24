@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.kero.security.core.agent.KeroAccessAgentFactory;
-import com.kero.security.core.agent.KeroAccessAgentFactoryBuilder;
+import com.kero.security.core.agent.KeroAccessAgentFactoryImpl;
 
 @Configuration
 public class KeroAccessAgentFactoryBean {
@@ -15,13 +15,10 @@ public class KeroAccessAgentFactoryBean {
 	@Autowired
 	private List<KeroAccessAgentFactorySpringConfiguration> springConfigurators;
 	
-	@Autowired
-	private KeroAccessAgentFactoryBuilder factoryBuilder;
-	
 	@Bean
 	public KeroAccessAgentFactory keroAccessAgentFactory() {
 		
-		KeroAccessAgentFactory factory = factoryBuilder.build();
+		KeroAccessAgentFactory factory = new KeroAccessAgentFactoryImpl();
 	
 		for(KeroAccessAgentFactorySpringConfiguration configuration : springConfigurators) {
 			
