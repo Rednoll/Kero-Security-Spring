@@ -86,7 +86,7 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 
 	implementation 'com.github.rednoll:kero-security:0.2.0-SNAPSHOT'
-	implementation 'com.github.rednoll:kero-security-ksdl:[0,)'
+	implementation 'com.github.rednoll:kero-security-ksdl:0.2.0-SNAPSHOT'
 }
 
 bootJar {

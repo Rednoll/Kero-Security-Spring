@@ -28,7 +28,7 @@ public class KsdlAgentBean {
 	
 		if(this.mainProviderPreloadingEnabled) {
 			
-			agent.preloadMainProvider();
+			agent.preloadMainReader();
 		}
 		
 		return agent;
