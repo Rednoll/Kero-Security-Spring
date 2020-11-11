@@ -35,7 +35,7 @@ public class AccessAgentClassPathResourceConfigurator implements KsdlAgentConfig
 	@Override
 	public void configure(KsdlAgent agent) {
 	
-		ResourceClassPathRepository repository = new TextResourceClassPathRepository(ksdlFileSuffixes);
+		ResourceClassPathRepository<String> repository = new TextResourceClassPathRepository(ksdlFileSuffixes);
 		
 		agent.addReader(new TextualReader(repository));
 	}

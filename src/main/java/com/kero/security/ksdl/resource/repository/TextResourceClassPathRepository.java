@@ -1,9 +1,8 @@
 package com.kero.security.ksdl.resource.repository;
 
-import java.nio.file.Path;
+import org.springframework.core.io.Resource;
 
-import com.kero.security.ksdl.resource.FileResource;
-import com.kero.security.ksdl.resource.FileTextResource;
+import com.kero.security.ksdl.resource.ClassPathTextResource;
 
 public class TextResourceClassPathRepository extends ResourceClassPathRepository<String> {
 
@@ -13,8 +12,8 @@ public class TextResourceClassPathRepository extends ResourceClassPathRepository
 	}
 
 	@Override
-	protected FileResource<String> getResource(Path repositoryPath, Path path) {
+	protected ClassPathTextResource getResource(Resource resource) {
 		
-		return new FileTextResource(repositoryPath, path);
+		return new ClassPathTextResource(resource);
 	}
 }

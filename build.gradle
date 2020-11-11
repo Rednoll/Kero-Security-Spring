@@ -83,10 +83,13 @@ dependencies {
 	
 	implementation 'org.slf4j:slf4j-api:1.7.25'
 	
+	implementation 'commons-io:commons-io:[2.6,)'
+	
+	
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 
 	implementation 'com.github.rednoll:kero-security:0.2.0-SNAPSHOT'
-	implementation 'com.github.rednoll:kero-security-ksdl:0.2.0-SNAPSHOT'
+	//implementation 'com.github.rednoll:kero-security-ksdl:0.2.0-SNAPSHOT'
 }
 
 bootJar {
