@@ -6,6 +6,11 @@ import com.kero.security.ksdl.resource.ClassPathTextResource;
 
 public class TextResourceClassPathRepository extends ResourceClassPathRepository<String> {
 
+	public TextResourceClassPathRepository() {
+		this(new String[] {".k-s", ".ks"});
+	
+	}
+	
 	public TextResourceClassPathRepository(String[] suffixes) {
 		super(suffixes);
 	

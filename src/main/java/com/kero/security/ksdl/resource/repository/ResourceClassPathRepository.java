@@ -22,19 +22,42 @@ public abstract class ResourceClassPathRepository<T> implements KsdlResourceRepo
 
 	private String[] ksdlFileSuffixes;
 	
+	public ResourceClassPathRepository() {
+		this(new String[] {".k-s", ".ks"});
+	
+	}
+	
 	public ResourceClassPathRepository(String[] suffixes) {
 		
 		this.ksdlFileSuffixes = suffixes;
 	}
-	
 
 	protected abstract ClassPathResource<T> getResource(Resource resource);
 	
 	@Override
 	public ClassPathResource<T> getResource(ResourceAddress address) {
 		
-//		return getResource(Paths.get(adaptAddress(address)));
-		return null;
+		ClassLoader cl = ClassLoader.getSystemClassLoader();
+		ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(cl);
+		
+		for(String suffix : ksdlFileSuffixes) {
+			
+			try {
+				
+				Resource[] resources = resolver.getResources("classpath*:**/"+adaptAddress(address)+suffix);
+			
+				if(resources.length > 0) {
+					
+					return getResource(resources[0]);
+				}
+			}
+			catch(IOException e) {
+
+				e.printStackTrace();
+			}
+		}
+		
+		throw new RuntimeException("Can't find resource: "+adaptAddress(address));
 	}
 	
 	@Override
@@ -65,7 +88,7 @@ public abstract class ResourceClassPathRepository<T> implements KsdlResourceRepo
 					}
 				}
 			}
-			catch (IOException e) {
+			catch(IOException e) {
 
 				e.printStackTrace();
 			}

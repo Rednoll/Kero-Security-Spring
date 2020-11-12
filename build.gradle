@@ -94,7 +94,7 @@ dependencies {
 
 bootJar {
 
-   enabled = false
+	enabled = false
 }
 
 jar {
