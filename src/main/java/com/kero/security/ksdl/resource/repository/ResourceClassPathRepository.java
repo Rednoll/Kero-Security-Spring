@@ -1,22 +1,18 @@
 package com.kero.security.ksdl.resource.repository;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
+import java.nio.charset.Charset;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
-import com.kero.security.ksdl.resource.ClassPathResource;
-import com.kero.security.ksdl.resource.additionals.ResourceAddress;
+import com.kero.security.ksdl.resource.KsdlResource;
 
-public abstract class ResourceClassPathRepository<T> implements KsdlResourceRepository<ClassPathResource<T>>{
+public class ResourceClassPathRepository implements KsdlResource {
 	
 	private static Logger LOGGER = LoggerFactory.getLogger("Kero-Security-Spring");
 
@@ -31,39 +27,11 @@ public abstract class ResourceClassPathRepository<T> implements KsdlResourceRepo
 		
 		this.ksdlFileSuffixes = suffixes;
 	}
-
-	protected abstract ClassPathResource<T> getResource(Resource resource);
 	
 	@Override
-	public ClassPathResource<T> getResource(ResourceAddress address) {
+	public String read() {
 		
-		ClassLoader cl = ClassLoader.getSystemClassLoader();
-		ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(cl);
-		
-		for(String suffix : ksdlFileSuffixes) {
-			
-			try {
-				
-				Resource[] resources = resolver.getResources("classpath*:**/"+adaptAddress(address)+suffix);
-			
-				if(resources.length > 0) {
-					
-					return getResource(resources[0]);
-				}
-			}
-			catch(IOException e) {
-
-				e.printStackTrace();
-			}
-		}
-		
-		throw new RuntimeException("Can't find resource: "+adaptAddress(address));
-	}
-	
-	@Override
-	public Collection<ClassPathResource<T>> getAll() {
-		
-		Map<ResourceAddress, ClassPathResource<T>> result = new HashMap<>();
+		StringBuilder result = new StringBuilder();
 		
 		ClassLoader cl = ClassLoader.getSystemClassLoader();
 		ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(cl);
@@ -78,14 +46,7 @@ public abstract class ResourceClassPathRepository<T> implements KsdlResourceRepo
 			
 				for(Resource resource : resources) {
 					
-					ClassPathResource<T> ksdlResource = getResource(resource);
-					ResourceAddress address = ksdlResource.getAddress();
-					
-					if(!result.containsKey(address)) {
-						
-						LOGGER.debug("Found KSDL resource: "+adaptAddress(address));
-						result.put(address, ksdlResource);
-					}
+					result.append(IOUtils.toString(resource.getInputStream(), Charset.defaultCharset())+"\n");
 				}
 			}
 			catch(IOException e) {
@@ -93,21 +54,7 @@ public abstract class ResourceClassPathRepository<T> implements KsdlResourceRepo
 				e.printStackTrace();
 			}
 		}
-	
-		LOGGER.info("Found KSDL in classpath: "+result.size());
 		
-		return result.values();
-	}
-	
-	@Override
-	public String getName() {
-		
-		return "ClassPath";
-	}
-
-	@Override
-	public String adaptAddress(ResourceAddress address) {
-	
-		return address.getRaw().replaceAll("\\"+ResourceAddress.SEPARATOR, Matcher.quoteReplacement(File.separator));
+		return result.toString();
 	}
 }

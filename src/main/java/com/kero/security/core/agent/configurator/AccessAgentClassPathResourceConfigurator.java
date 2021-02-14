@@ -7,10 +7,8 @@ import org.springframework.stereotype.Component;
 
 import com.kero.security.ksdl.agent.KsdlAgent;
 import com.kero.security.ksdl.agent.KsdlAgentFactory;
-import com.kero.security.ksdl.agent.configuration.KsdlAgentConfigurator;
-import com.kero.security.ksdl.reader.TextualReader;
+import com.kero.security.ksdl.agent.configurator.KsdlAgentConfigurator;
 import com.kero.security.ksdl.resource.repository.ResourceClassPathRepository;
-import com.kero.security.ksdl.resource.repository.TextResourceClassPathRepository;
 import com.kero.security.spring.config.KsdlAgentFactorySpringConfiguration;
 
 @Component
@@ -35,8 +33,8 @@ public class AccessAgentClassPathResourceConfigurator implements KsdlAgentConfig
 	@Override
 	public void configure(KsdlAgent agent) {
 	
-		ResourceClassPathRepository<String> repository = new TextResourceClassPathRepository(ksdlFileSuffixes);
+		ResourceClassPathRepository resource = new ResourceClassPathRepository(ksdlFileSuffixes);
 		
-		agent.addReader(new TextualReader(repository));
+		agent.addResource(resource);
 	}
 }
