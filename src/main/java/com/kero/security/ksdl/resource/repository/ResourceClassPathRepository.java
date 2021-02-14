@@ -2,6 +2,8 @@ package com.kero.security.ksdl.resource.repository;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -31,7 +33,7 @@ public class ResourceClassPathRepository implements KsdlResource {
 	@Override
 	public String read() {
 		
-		StringBuilder result = new StringBuilder();
+		Set<String> result = new HashSet<>();
 		
 		ClassLoader cl = ClassLoader.getSystemClassLoader();
 		ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(cl);
@@ -46,7 +48,7 @@ public class ResourceClassPathRepository implements KsdlResource {
 			
 				for(Resource resource : resources) {
 					
-					result.append(IOUtils.toString(resource.getInputStream(), Charset.defaultCharset())+"\n");
+					result.add(IOUtils.toString(resource.getInputStream(), Charset.defaultCharset())+"\n");
 				}
 			}
 			catch(IOException e) {
@@ -55,6 +57,6 @@ public class ResourceClassPathRepository implements KsdlResource {
 			}
 		}
 		
-		return result.toString();
+		return String.join("\n", result);
 	}
 }
